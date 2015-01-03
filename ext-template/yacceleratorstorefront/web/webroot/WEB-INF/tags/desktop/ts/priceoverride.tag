@@ -13,7 +13,7 @@
 		data-cart='{"cartCode" : "${cartData.code}",
 						           	"productTotalPrice":"${entry.totalPrice.value}","productName":"${entry.product.name}"}'>
 		<input type="hidden" name="entryNumber" value="${entry.entryNumber}" />
-		<input type="hidden" name="productCode" value="${entry.product.code}" />
+		<!-- <input type="hidden" name="productCode" value="${entry.product.code}" />  -->
 		<input type="text" name="totalPrice" value="${entry.totalPrice.value}"
 			style="text-align: right; width: 50px;" />
 		<select name="reasonNum" id="reasonCode${entry.entryNumber}">
