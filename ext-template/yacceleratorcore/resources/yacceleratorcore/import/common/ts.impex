@@ -1,0 +1,29 @@
+#INSERT_UPDATE PriceOverrideReasonCode;reasonCode[unique=true];isForShipping
+#;1;true
+
+#INSERT_UPDATE ReasonCodeLang;reasonCode[unique=true];languageCode[unique=true];reasonCodeText
+#;1;EN;Price Match- Rebook
+
+INSERT_UPDATE PriceOverrideReasonCode;reasonNum[unique=true];reasonCode[lang=en];reasonCode[lang=de]
+;1;Price Match- Rebook;Preis-Umbuchung
+;2;Change pricing because sales agreement;Preisänderung wegen Vertriebsübereinkunft
+;3;Shipping delegation;Versand delegation
+;4;Invalid price set up in system;Ungültiger Preis gepflegt
+;5;Volume price request;Mengenrabatt
+;6;Expired coupon/Price match;Abgelaufener Coupon
+;7;Concession;Zugeständnis
+;8;Price Match- Return Rebook;Rückläufer
+;9;Upper level management / finance approval; Vorstandszustimmung
+;10;Other;Anderes
+
+#INSERT_UPDATE PriceOverrideReasonCode;reasonCode[unique=true]
+#;Price Match- Rebook
+#;Change pricing because sales agreement
+#;Shipping delegation
+#;Invalid price set up in system
+#;Volume price request
+#;Expired coupon/Price match
+#;Concession
+#;Price Match- Return Rebook
+#;Upper level management / finance approval
+#;Other
