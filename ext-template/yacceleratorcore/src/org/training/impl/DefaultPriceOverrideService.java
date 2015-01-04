@@ -7,6 +7,7 @@ import de.hybris.platform.commerceservices.i18n.CommerceCommonI18NService;
 import de.hybris.platform.core.model.order.AbstractOrderEntryModel;
 import de.hybris.platform.core.model.order.AbstractOrderModel;
 import de.hybris.platform.order.exceptions.CalculationException;
+import de.hybris.platform.servicelayer.exceptions.SystemException;
 import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.servicelayer.search.FlexibleSearchQuery;
 import de.hybris.platform.servicelayer.search.FlexibleSearchService;
@@ -56,10 +57,9 @@ public class DefaultPriceOverrideService implements PriceOverrideService
 		{
 			applyPriceOverride(orderOrCart, entry);
 		}
-		catch (CalculationException e)
+		catch (final CalculationException e)
 		{
-			// TODO: adapt exception management for calculation as in hybris standard
-			e.printStackTrace();
+			throw new SystemException("Could not calculate order [" + orderOrCart.getCode() + "] due to : " + e.getMessage(), e);
 		}
 		return priceOverride;
 	}
