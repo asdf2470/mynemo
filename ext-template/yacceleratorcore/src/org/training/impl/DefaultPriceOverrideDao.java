@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 
 import org.training.PriceOverrideDao;
 
+import de.hybris.platform.yacceleratorcore.jalo.PriceOverrideReasonCode;
 import de.hybris.platform.yacceleratorcore.model.PriceOverrideModel;
 import de.hybris.platform.yacceleratorcore.model.PriceOverrideReasonCodeModel;
 
@@ -31,8 +32,10 @@ public class DefaultPriceOverrideDao implements PriceOverrideDao
 	public List<PriceOverrideModel> findPriceOverrides(AbstractOrderEntryModel entry)
 	{
 		String entryPk = entry.getPk().toString();
-		String query = "SELECT {pk},{cartentry},{oldtotalprice},{newtotalprice}, {creationtime}";
-		query += " from {PriceOverride} WHERE {cartentry}=" + entryPk;
+		String query = "SELECT {"+ PriceOverrideModel.PK+"}, {"+ PriceOverrideModel.CARTENTRY +"}, {" 
+				+ PriceOverrideModel.OLDTOTALPRICE + "}, {" + PriceOverrideModel.NEWTOTALPRICE + "}, {" 
+				+ PriceOverrideModel.CREATIONTIME +"}";
+		query += " FROM {" + PriceOverrideModel._TYPECODE +"} WHERE {" + PriceOverrideModel.CARTENTRY + "}=" + entryPk;
 		
 		FlexibleSearchQuery flexibleSearchQuery = new FlexibleSearchQuery(query);
 		SearchResult<PriceOverrideModel> searchResult = flexibleSearchService.search(flexibleSearchQuery);
@@ -44,8 +47,9 @@ public class DefaultPriceOverrideDao implements PriceOverrideDao
 	@Override
 	public List<PriceOverrideReasonCodeModel> findItemReasonCodes()
 	{
-		String query = "SELECT {pk}, {reasonCode}, {reasonNum} from {PriceOverrideReasonCode}";
-		query+= "WHERE {isForItem} = 1";
+		String query = "SELECT {"+PriceOverrideReasonCodeModel.PK+"}, {"+PriceOverrideReasonCodeModel.REASONCODE+"},"
+				+ " {"+ PriceOverrideReasonCodeModel.REASONNUM+"} FROM {"+PriceOverrideReasonCodeModel._TYPECODE+ "}";
+		query+= "WHERE {"+ PriceOverrideReasonCodeModel.ISFORITEM +"} =" + Boolean.TRUE;
 		
 		FlexibleSearchQuery flexibleSearchQuery = new FlexibleSearchQuery(query);
 		SearchResult<PriceOverrideReasonCodeModel> searchResult = flexibleSearchService.search(flexibleSearchQuery);
@@ -56,8 +60,9 @@ public class DefaultPriceOverrideDao implements PriceOverrideDao
 	@Override
 	public PriceOverrideReasonCodeModel findReasonCodeForReasonNum(Integer reasonNum)
 	{
-		String query = "SELECT {pk}, {reasonCode}, {reasonNum} from {PriceOverrideReasonCode}";
-		query+= "WHERE {reasonNum} = "+reasonNum.intValue();
+		String query = "SELECT {"+PriceOverrideReasonCodeModel.PK+"}, {"+PriceOverrideReasonCodeModel.REASONCODE+"},"
+				+ " {"+ PriceOverrideReasonCodeModel.REASONNUM+"} FROM {"+PriceOverrideReasonCodeModel._TYPECODE+ "}";
+		query+= "WHERE {"+ PriceOverrideReasonCodeModel.REASONNUM +"} = "+reasonNum.intValue();
 		
 		FlexibleSearchQuery flexibleSearchQuery = new FlexibleSearchQuery(query);
 		SearchResult<PriceOverrideReasonCodeModel> searchResult = flexibleSearchService.search(flexibleSearchQuery);
