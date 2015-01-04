@@ -410,19 +410,6 @@ public class CartPageController extends AbstractPageController
 		return REDIRECT_PREFIX + "/cart";
 	}
 
-	/** MISSING/BROKEN
-	 * @param model
-	 * @param priceOverride
-	 */
-	/*private void maintainPriceOverridesInCart(Model model, String productCode, PriceOverrideModel priceOverride)
-	{
-		/*if(productCode!= null && priceOverride != null)
-		{
-			sessionService.getCurrentSession().setAttribute(productCode, priceOverride);
-			model.addAttribute(productCode, priceOverride);
-		}
-		
-	}*/
 	
 	/**
 	 * Perform Telesales-specific actions: Add attributes to check whether ASM is active 
@@ -439,6 +426,5 @@ public class CartPageController extends AbstractPageController
 		List<PriceOverrideReasonCodeModel> priceOverrideReasonCodes=cartFacade.findReasonCodes();
 		model.addAttribute("priceOverrideReasonCodes", priceOverrideReasonCodes);
 		
-		//maintainPriceOverridesInCart(model, null, null);
 	}
 }
