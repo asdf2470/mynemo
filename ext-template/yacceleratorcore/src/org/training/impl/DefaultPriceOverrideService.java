@@ -84,7 +84,7 @@ public class DefaultPriceOverrideService implements PriceOverrideService
 		
 		entry.setCurrentPriceOverride(priceOverride);
 		
-		//save the price override to DB. entry is saved during calculation (following directly from calculate).
+		//save the price override to DB. The entry is saved during calculation which is triggered from method applyPriceOverride..
 		modelService.save(priceOverride);		
 		return priceOverride;	
 	}

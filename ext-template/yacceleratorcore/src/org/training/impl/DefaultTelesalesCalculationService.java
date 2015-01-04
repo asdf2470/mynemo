@@ -46,32 +46,7 @@ public class DefaultTelesalesCalculationService extends DefaultCalculationServic
 		{
 			if (entry instanceof OrderEntryModel)
 			{
-				if (entry.getCurrentPriceOverride() != null)
-				{
-					//order entry, should not be necessary to re-calculate. 
-					// TODO: update all priceoverrides for that entry (from cart to order)
-					List<AbstractOrderEntryModel> cartEntries = cartService.getSessionCart().getEntries();
-					AbstractOrderEntryModel rightEntry = null;
-					for (AbstractOrderEntryModel cartEntry : cartEntries)
-					{
-						if (cartEntry.getPk().toString().equalsIgnoreCase(entry.getCurrentPriceOverride().getCartEntry().toString()))
-						{
-							rightEntry=cartEntry;
-							break;
-						}
-					}
-					if (rightEntry != null)
-					{
-						List<PriceOverrideModel> priceOverrides = priceOverrideService.findPriceOverrides(rightEntry);
-						for (PriceOverrideModel priceOverride : priceOverrides)
-						{
-							priceOverride.setCartEntry(entry.getPk());
-							priceOverride.setCart(entry.getOrder());
-							modelService.save(priceOverride);
-						}
-					}
-
-				}
+				maintainOrderEntry(entry);				
 			}
 			else
 			{
@@ -89,6 +64,35 @@ public class DefaultTelesalesCalculationService extends DefaultCalculationServic
 			entry.setCalculated(Boolean.TRUE);
 			getModelService().save(entry);
 		}
+	}
+
+
+	private void maintainOrderEntry(AbstractOrderEntryModel entry)
+	{
+		if (entry.getCurrentPriceOverride() != null)
+		{					
+			//order entry, do not re-calculate. 
+			List<AbstractOrderEntryModel> cartEntries = cartService.getSessionCart().getEntries();
+			AbstractOrderEntryModel rightEntry = null;
+			for (AbstractOrderEntryModel cartEntry : cartEntries)
+			{
+				if (cartEntry.getPk().toString().equalsIgnoreCase(entry.getCurrentPriceOverride().getCartEntry().toString()))
+				{
+					rightEntry=cartEntry;
+					break;
+				}
+			}
+			if (rightEntry != null)
+			{
+				List<PriceOverrideModel> priceOverrides = priceOverrideService.findPriceOverrides(rightEntry);
+				for (PriceOverrideModel priceOverride : priceOverrides)
+				{
+					priceOverride.setCartEntry(entry.getPk());
+					priceOverride.setCart(entry.getOrder());
+					modelService.save(priceOverride);
+				}
+			}
+		}		
 	}
 
 	private void calculateTotalsForCartEntries(AbstractOrderEntryModel entry)
@@ -112,37 +116,3 @@ public class DefaultTelesalesCalculationService extends DefaultCalculationServic
 	}
 }
 
-
-
-
-/*
- * @Resource(name = "modelService") private ModelService modelService;
- */
-
-/*
- * @Override public void calculate(AbstractOrderModel cart) throws CalculationException { super.calculate(cart);
- * /*HashMap<Integer, PriceOverrideModel> priceOverrides = priceOverrideService.findPriceOverrides(cart); if
- * (priceOverrides != null) apply(priceOverrides, cart);
- */
-//}
-
-
-/*
- * apply price overrides to cart on header and item level - MANUAL CHANGE, NEED TO THINK ABOUT TAXES
- */
-/*
- * private void apply(HashMap<Integer, PriceOverrideModel> priceOverrides, AbstractOrderModel cart) { for (Integer
- * itemNumber : priceOverrides.keySet()) {
- * cart.getEntries().get(itemNumber.intValue()).setTotalPrice(priceOverrides.get(itemNumber).getNewTotalPrice());
- * modelService.save(cart.getEntries().get(itemNumber.intValue())); Double reduction = new
- * Double(priceOverrides.get(itemNumber).getOldTotalPrice().doubleValue() -
- * priceOverrides.get(itemNumber).getNewTotalPrice().doubleValue()); cart.setTotalPrice(new
- * Double(cart.getTotalPrice().doubleValue() - reduction.doubleValue())); cart.setSubtotal(new
- * Double(cart.getSubtotal().doubleValue() - reduction.doubleValue())); } modelService.save(cart); }
- */
-
-/*
- * @Override public void recalculate(AbstractOrderModel cart) throws CalculationException { super.recalculate(cart);
- * HashMap<Integer, PriceOverrideModel> priceOverrides = priceOverrideService.findPriceOverrides(cart); if
- * (priceOverrides != null) apply(priceOverrides, cart); }
- */
