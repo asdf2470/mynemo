@@ -83,14 +83,14 @@ public class DefaultCartFacade implements CartFacade
 	private DeliveryService deliveryService;
 	private Converter<CountryModel, CountryData> countryConverter;
 	private PriceDataFactory priceDataFactory;
-	
-	@Resource ( name="priceOverrideService")
+
+	@Resource(name = "priceOverrideService")
 	private PriceOverrideService priceOverrideService;
-	
+
 	//
 	private SessionService sessionService;
 	private ModelService modelService;
-	private static final Logger LOG=Logger.getLogger(DefaultCartFacade.class);
+	private static final Logger LOG = Logger.getLogger(DefaultCartFacade.class);
 
 
 	@Override
@@ -219,33 +219,24 @@ public class DefaultCartFacade implements CartFacade
 
 		return getCartModificationConverter().convert(modification);
 	}
-	
+
 	/**
 	 * Update total price of a cart entry for an ASM agent
-	*/
+	 */
 	@Override
-	public PriceOverrideModel updateCartEntryTotalPrice(final long entryNumber, final Double newPrice, 
-			final Integer reasonNum, final String reasonText) throws CommerceCartModificationException
+	public PriceOverrideModel updateCartEntryTotalPrice(final long entryNumber, final Double newPrice, final Integer reasonNum,
+			final String reasonText) throws CommerceCartModificationException
 	{
 		final CartModel cartModel = getCartService().getSessionCart();
-		AbstractOrderEntryModel cartEntry= cartModel.getEntries().get((int)entryNumber);
-		
-		/*final String AS_MODE_SESSION_ATTRIBUTE =  "de.hybris.platform.assistedservicefacades.AssistedServiceFacade_as_mode";
-		boolean isAsmAgent=(sessionService.getCurrentSession().getAttribute(AS_MODE_SESSION_ATTRIBUTE) !=null 
-				?	((Boolean) sessionService.getCurrentSession().getAttribute(AS_MODE_SESSION_ATTRIBUTE)).booleanValue()			
-				: false);*/
-		
-		//if(isAsmAgent)
-		//{
-			PriceOverrideReasonCodeModel priceOverrideReasonCode=priceOverrideService.findReasonCodeForReasonNum(reasonNum);
-			PriceOverrideModel priceOverride= priceOverrideService.createAndApplyPriceOverride(cartModel, cartEntry, newPrice, 
-					priceOverrideReasonCode, reasonText);
-			cartEntry.setCurrentPriceOverride(priceOverride);
-			return priceOverride;
-		//}
-		//return null;
+		AbstractOrderEntryModel cartEntry = cartModel.getEntries().get((int) entryNumber);
+
+		PriceOverrideReasonCodeModel priceOverrideReasonCode = priceOverrideService.findReasonCodeForReasonNum(reasonNum);
+		PriceOverrideModel priceOverride = priceOverrideService.createAndApplyPriceOverride(cartModel, cartEntry, newPrice,
+				priceOverrideReasonCode, reasonText);
+		cartEntry.setCurrentPriceOverride(priceOverride);
+		return priceOverride;
 	}
-	
+
 	@Override
 	public List<PriceOverrideReasonCodeModel> findReasonCodes()
 	{
@@ -439,7 +430,7 @@ public class DefaultCartFacade implements CartFacade
 		sessionCart.setTotalTax(taxData);
 		sessionCart.setTotalPrice(totalPriceData);
 		sessionCart.setNet(false);
-		
+
 		return sessionCart;
 	}
 
@@ -639,17 +630,17 @@ public class DefaultCartFacade implements CartFacade
 	{
 		this.countryConverter = countryConverter;
 	}
-	
+
 	@Required
 	public void setSessionService(SessionService sessionService)
 	{
-		this.sessionService=sessionService;
+		this.sessionService = sessionService;
 	}
-	
+
 	@Required
 	public void setModelService(ModelService modelService)
 	{
-		this.modelService=modelService;
+		this.modelService = modelService;
 	}
 
 }

@@ -39,27 +39,12 @@
 	</enumtypes>
 
 	<itemtypes>
-		<itemtype code="TMPitem" autocreate="true" generate="true"
-			jaloclass="de.hybris.platform.yacceleratorcore.jalo.TMPitem">
-			<description>My Test item</description>
-			<attributes>
-				<attribute qualifier="reasonCode" type="PriceOverrideReasonCode">
-					<persistence type="property" />
-				</attribute>
-				<attribute qualifier="myString" type="java.lang.String">
-					<persistence type="property" />
-				</attribute>
-				<attribute qualifier="myPK" type="de.hybris.platform.core.PK">
-					<persistence type="property" />
-				</attribute>
-			</attributes>
-		</itemtype>
 		<!-- Telesales -->
 		<itemtype code="PriceOverrideReasonCode" autocreate="true"
 			generate="true"
 			jaloclass="de.hybris.platform.yacceleratorcore.jalo.PriceOverrideReasonCode">
 			<description>Reason code for price override</description>
-			<deployment table="PriceOverrideReasonCode" typecode="11901" />
+			<deployment table="PriceOverrideReasonCode" typecode="11901"/>
 			<attributes>
 				<attribute qualifier="reasonNum" type="java.lang.Integer">
 					<description>Number for reason code</description>
@@ -81,53 +66,6 @@
 					<persistence type="property" />
 					<defaultvalue>Boolean.TRUE</defaultvalue>
 				</attribute>
-			</attributes>
-		</itemtype>
-
-		<itemtype code="OldPriceOverrideReasonCode" autocreate="true"
-			generate="true"
-			jaloclass="de.hybris.platform.yacceleratorcore.jalo.OldPriceOverrideReasonCode">
-			<description>Reason code for price override</description>
-			<deployment table="OldPORC" typecode="11899" />
-			<attributes>
-				<attribute qualifier="reasonCode" type="java.lang.Integer">
-					<description>Text for reason code</description>
-					<persistence type="property" />
-					<modifiers optional="false" />
-				</attribute>
-				<attribute qualifier="isForShipping" type="java.lang.Boolean">
-					<description>Is reason code used for shipping</description>
-					<persistence type="property" />
-					<defaultvalue>Boolean.TRUE</defaultvalue>
-				</attribute>
-				<attribute qualifier="isForItem" type="java.lang.Boolean">
-					<description>Is reason code used for item</description>
-					<persistence type="property" />
-					<defaultvalue>Boolean.TRUE</defaultvalue>
-				</attribute>
-			</attributes>
-		</itemtype>
-		<itemtype code="ReasonCodeLang" autocreate="true" generate="true"
-			jaloclass="de.hybris.platform.yacceleratorcore.jalo.ReasonCodeLang">
-			<description>Reason code for price override</description>
-			<deployment table="ReasonCodeLang" typecode="11900" />
-			<attributes>
-				<attribute qualifier="languageCode" type="java.lang.String">
-					<description>Language for reason code</description>
-					<persistence type="property" />
-					<modifiers optional="false" />
-				</attribute>
-				<attribute qualifier="reasonCode" type="java.lang.Integer">
-					<description>Text for reason code</description>
-					<persistence type="property" />
-					<modifiers optional="false" />
-				</attribute>
-				<attribute qualifier="reasonCodeText" type="java.lang.String">
-					<description>Language dependent text for reason code</description>
-					<persistence type="property" />
-					<modifiers optional="false" />
-				</attribute>
-
 			</attributes>
 		</itemtype>
 		<itemtype code="PriceOverride" autocreate="true" generate="true"
